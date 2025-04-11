@@ -1,3 +1,4 @@
+/* dashboard.css */
 .dashboard-container {
     width: 100%;
     display: flex;
@@ -11,34 +12,63 @@
     padding-bottom: 20px;
 }
 
+.geri-donusum-bilgileri-container {
+    width: 90%;
+
+
+    padding: 30px;
+
+    margin: 20px auto;
+    border-radius: 10px;
+}
+
 .geri-donusum-bilgileri {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    margin-bottom: 20px;
     box-sizing: border-box;
     align-items: stretch;
 }
 
 .geri-donusum-item {
-    width: 33%;
+    width: 30%;
+    /* Daha küçük item genişliği */
     text-align: center;
     border: 1px solid #ddd;
-    margin: 20px;
-    border-radius: 8px;
+    margin: 15px;
+    /* Daha az margin */
+    border-radius: 10px;
     background-color: #d0deca;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    padding-bottom: 10px;
+    padding: 20px;
+    /* İç boşluk */
+    transition: transform 0.3s ease;
+    /* Hover efekti için geçiş */
+}
+
+.geri-donusum-item:hover {
+    transform: translateY(-5px);
+    /* Hover efekti */
 }
 
 .geri-donusum-resim {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border-radius: 50%;
+}
+
+.resim-yukleme-alani-container {
+    width: 96%;
+    background-color: #d9f5d9;
+    padding: 30px;
+
+    margin: 20px auto;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .resim-yukleme-alani {
@@ -55,40 +85,32 @@
     gap: 10px;
     box-shadow: none;
     box-sizing: border-box;
-    margin-top: auto;
     position: relative;
 }
 
 .resim-yukleme-alani input[type="file"],
 .resim-yukleme-alani button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 25px;
+    /* Daha büyük butonlar */
     background-color: #f0f0f0;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
+    /* Daha yuvarlak butonlar */
     font-size: 1em;
     cursor: pointer;
     color: #333;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Geçiş ve dönüşüm */
     position: relative;
     overflow: hidden;
-}
-
-.resim-yukleme-alani input[type="file"]::before {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    color: #333;
-    transition: background-color 0.3s ease;
 }
 
 .resim-yukleme-alani input[type="file"]:hover::before,
 .resim-yukleme-alani button:hover {
     background-color: #e0e0e0;
+    transform: scale(1.05);
+    /* Hover efekti */
 }
 
 .resim-yukleme-alani input[type="file"] {
@@ -98,25 +120,24 @@
 
 .resim-yukleme-alani .file-name {
     font-size: 1rem;
-    padding: 8px;
-    background-color: #d0deca;
+    padding: 10px;
+    /* Daha fazla iç boşluk */
     opacity: 0.9;
-    border-radius: 5px;
+    border-radius: 8px;
+    /* Daha yuvarlak */
     width: 50%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     white-space: nowrap;
-    /* Metnin tek satırda kalmasını sağlar */
     overflow: hidden;
-    /* Taşan metni gizler */
     text-overflow: ellipsis;
-    /* Taşan metnin sonunda üç nokta gösterir */
     max-width: 80%;
-    /* Metnin maksimum genişliğini sınırlar */
 }
 
 .geri-donusum-item h3 {
     color: #185f0f;
     margin-bottom: 10px;
+    font-size: 1.2em;
+    /* Daha büyük başlık */
 }
 
 .geri-donusum-item p {
@@ -133,40 +154,46 @@ img {
 .expand-button {
     background-color: rgba(24, 94, 15, 0.2);
     border: none;
-    padding: 8px 16px;
+    padding: 10px 20px;
+    /* Daha büyük buton */
     font-size: 1em;
     cursor: pointer;
     color: #185e0f;
-    margin-top: 5px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    /* Daha fazla margin */
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .expand-button:hover {
     background-color: rgba(24, 94, 15, 0.4);
+    transform: scale(1.05);
 }
 
 .progress-bar-container {
     width: 80%;
     margin: 20px auto;
     background-color: #f0f0f0;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 .progress-bar {
-    height: 20px;
+    height: 25px;
     background-color: #4CAF50;
     width: 0%;
     transition: width 0.3s ease;
 }
 
 .tahmin-sonucu {
-    margin-top: 20px;
+    margin: 20px auto;
     text-align: center;
     background-color: #d0deca;
     opacity: 0.9;
-    min-width: 25vw;
+    min-width: 30vw;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .file-info-container {
@@ -174,8 +201,9 @@ img {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    padding: 10px 20px;
     border-radius: 8px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
 }
 
 .file-name {
@@ -190,15 +218,17 @@ img {
     background-color: #ff4d4d;
     color: rgb(22, 1, 1);
     border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
+    padding: 8px 15px;
+    border-radius: 8px;
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     margin: 0;
 }
 
 .remove-file-button:hover {
     background-color: #e63946;
+    transform: scale(1.05);
+
 }
