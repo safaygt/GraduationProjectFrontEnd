@@ -1,0 +1,204 @@
+.dashboard-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    min-height: 96vh;
+    background-color: rgba(95, 180, 92, 0.5);
+    background-blend-mode: multiply;
+    background-image: url('../background.jpg');
+    padding-bottom: 20px;
+}
+
+.geri-donusum-bilgileri {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+.geri-donusum-item {
+    width: 33%;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 20px;
+    border-radius: 8px;
+    background-color: #d0deca;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+.geri-donusum-resim {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+
+.resim-yukleme-alani {
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: none;
+    box-sizing: border-box;
+    margin-top: auto;
+    position: relative;
+}
+
+.resim-yukleme-alani input[type="file"],
+.resim-yukleme-alani button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.resim-yukleme-alani input[type="file"]::before {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.resim-yukleme-alani input[type="file"]:hover::before,
+.resim-yukleme-alani button:hover {
+    background-color: #e0e0e0;
+}
+
+.resim-yukleme-alani input[type="file"] {
+    opacity: 1;
+    background-color: #f0f0f0;
+}
+
+.resim-yukleme-alani .file-name {
+    font-size: 1rem;
+    padding: 8px;
+    background-color: #d0deca;
+    opacity: 0.9;
+    border-radius: 5px;
+    width: 50%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
+    /* Metnin tek satırda kalmasını sağlar */
+    overflow: hidden;
+    /* Taşan metni gizler */
+    text-overflow: ellipsis;
+    /* Taşan metnin sonunda üç nokta gösterir */
+    max-width: 80%;
+    /* Metnin maksimum genişliğini sınırlar */
+}
+
+.geri-donusum-item h3 {
+    color: #185f0f;
+    margin-bottom: 10px;
+}
+
+.geri-donusum-item p {
+    color: #333;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.expand-button {
+    background-color: rgba(24, 94, 15, 0.2);
+    border: none;
+    padding: 8px 16px;
+    font-size: 1em;
+    cursor: pointer;
+    color: #185e0f;
+    margin-top: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.expand-button:hover {
+    background-color: rgba(24, 94, 15, 0.4);
+}
+
+.progress-bar-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #4CAF50;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.tahmin-sonucu {
+    margin-top: 20px;
+    text-align: center;
+    background-color: #d0deca;
+    opacity: 0.9;
+    min-width: 25vw;
+}
+
+.file-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.file-name {
+    font-size: 1rem;
+    color: #2e2e2e;
+    font-weight: 500;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+}
+
+.remove-file-button {
+    background-color: #ff4d4d;
+    color: rgb(22, 1, 1);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+.remove-file-button:hover {
+    background-color: #e63946;
+}
