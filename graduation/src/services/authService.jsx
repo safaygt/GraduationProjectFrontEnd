@@ -13,15 +13,17 @@ const login = async (username, password) => {
                 username: username,
                 token: response.data.token,
                 id: userId,
-                exp: decodedToken.exp, // Token'ın geçerlilik süresi eklendi
+                exp: decodedToken.exp,
             };
             localStorage.setItem('user', JSON.stringify(user));
         }
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        const errMessage = error.response?.data || "Sunucu hatası";
+        throw errMessage;
     }
 };
+
 
 const logout = () => {
     localStorage.removeItem('user');

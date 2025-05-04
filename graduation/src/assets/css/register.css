@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 96vh;
+    min-height: 97vh;
     background-color: rgba(95, 180, 92, 0.5);
     background-blend-mode: multiply;
     background-image: url('../background.jpg');

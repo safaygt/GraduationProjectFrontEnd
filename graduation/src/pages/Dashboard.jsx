@@ -44,9 +44,10 @@ function Dashboard() {
 
     const handleUpload = async () => {
         if (!selectedFile) {
-            alert("Lütfen bir resim seçin!");
+            toast.warning("Lütfen bir resim seçin!");
             return;
         }
+
 
         const formData = new FormData();
         formData.append("file", selectedFile);
@@ -80,7 +81,7 @@ function Dashboard() {
             }, 60);
 
         } catch (error) {
-            console.error("Tahmin yapılamadı", error);
+            toast.error("Tahmin yapılamadı. Lütfen tekrar deneyin.");
             setLoading(false);
         }
     };

@@ -20,6 +20,11 @@ function Header() {
         navigate('/about')
     }
 
+
+    const navigateToMyWastes = () => {
+        navigate('/atiklarim')
+    }
+
     return (
         <header>
             <nav>
@@ -30,9 +35,15 @@ function Header() {
                                 <button onClick={navigateToMain}>Ana Sayfa</button>
                             </li>
 
+                            <li className='atiklarim'>
+                                <button onClick={navigateToMyWastes}>Atıklarım</button>
+                            </li>
+
                             <li className='hakkinda'>
                                 <button onClick={navigateToAbout}>Bize Ulaş</button>
                             </li>
+
+
                             <li>
                                 <button onClick={handleLogout}>Çıkış Yap</button>
                             </li>
