@@ -18,7 +18,7 @@
 
 
 
-    background-color: #d1dfcb;
+    background-color: #c4ddb9;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -48,6 +48,7 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    background-color: #e7e5e5;
     box-sizing: border-box;
 }
 

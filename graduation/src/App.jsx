@@ -12,6 +12,7 @@ import About from './pages/About';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './layouts/Footer'; // Footer'ı içe aktar
+import MyWastes from './pages/myWastes';
 
 function App() {
   const user = AuthService.getCurrentUser();
@@ -47,6 +48,14 @@ function App() {
             <>
               <Header />
               {user ? <Dashboard /> : <Navigate to="/login" />}
+              <Footer />
+            </>
+          } />
+
+          <Route path="/atiklarim" element={
+            <>
+              <Header />
+              {user ? <MyWastes /> : <Navigate to="/login" />}
               <Footer />
             </>
           } />

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import AuthService from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/login.css';
+import { toast } from 'react-toastify';
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -15,7 +15,13 @@ function Login() {
             await AuthService.login(username, password);
             navigate('/main');
         } catch (err) {
-            setError(err);
+            let errorMsg = "Giriş başarısız.";
+            if (err && typeof err === 'string') {
+                errorMsg = err;
+            } else if (err?.message) {
+                errorMsg = err.message;
+            }
+            toast.error(errorMsg);
         }
     };
 
@@ -23,7 +29,6 @@ function Login() {
         <div className="login-container">
             <div className="login-form">
                 <h2>Login</h2>
-                {error && <p className="error-message">{error}</p>}
                 <form onSubmit={handleLogin}>
                     <div>
                         <label>Username:</label>
