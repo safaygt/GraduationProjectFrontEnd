@@ -48,7 +48,6 @@ function Dashboard() {
             return;
         }
 
-
         const formData = new FormData();
         formData.append("file", selectedFile);
 
@@ -66,6 +65,8 @@ function Dashboard() {
                 }
             });
 
+            // Simulate progress if actual upload progress is not available from backend
+            // If backend provides progress, you can remove this interval
             const interval = setInterval(() => {
                 setProgress((prevProgress) => {
                     if (prevProgress >= 100) {
@@ -73,16 +74,18 @@ function Dashboard() {
                         setTimeout(() => {
                             setLoading(false);
                             setResult(response.data);
-                        }, 3000);
+                            toast.success("Tahmin başarıyla tamamlandı!"); // Başarı mesajı eklendi
+                        }, 300); // Progress barın bitmesi ve sonuçların gelmesi arasındaki gecikme
                         return 100;
                     }
-                    return prevProgress + 2;
+                    return prevProgress + 2; // Yükleme hızını ayarlayabilirsiniz
                 });
-            }, 60);
-
+            }, 60); // Her 60ms'de bir ilerleme
         } catch (error) {
+            console.error("Yükleme veya tahmin hatası:", error); // Hata detaylarını görmek için
             toast.error("Tahmin yapılamadı. Lütfen tekrar deneyin.");
             setLoading(false);
+            setProgress(0); // Hata durumunda ilerlemeyi sıfırla
         }
     };
 
@@ -162,7 +165,12 @@ function Dashboard() {
                                 </svg>
                             </button>
                         </div>
+
                     )}
+                    {/* Yeni uyarı mesajı burada */}
+                    <div className="note-message">
+                        <p>Not: Daha doğru sonuçlar için, sade arka planda sabit bir şekilde çekiniz.</p>
+                    </div>
                 </div>
 
                 {loading && (

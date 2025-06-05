@@ -28,10 +28,10 @@ function Login() {
     return (
         <div className="login-container">
             <div className="login-form">
-                <h2>Login</h2>
+                <h2>Giriş Yap</h2>
                 <form onSubmit={handleLogin}>
                     <div>
-                        <label>Username:</label>
+                        <label>Kullanıcı Adı:</label>
                         <input
                             type="text"
                             value={username}
@@ -39,14 +39,14 @@ function Login() {
                         />
                     </div>
                     <div>
-                        <label>Password:</label>
+                        <label>Şifre:</label>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button type="submit">Login</button>
+                    <button type="submit">Giriş Yap</button>
                 </form>
             </div>
         </div>

@@ -38,10 +38,10 @@ function Register() {
     return (
         <div className="register-container">
             <div className="register-form">
-                <h2>Register</h2>
+                <h2>Kayıt Ol</h2>
                 <form onSubmit={handleRegister}>
                     <div>
-                        <label>Name:</label>
+                        <label>İsim:</label>
                         <input
                             type="text"
                             value={name}
@@ -50,7 +50,7 @@ function Register() {
                         />
                     </div>
                     <div>
-                        <label>Last Name:</label>
+                        <label>Soyisim:</label>
                         <input
                             type="text"
                             value={lastName}
@@ -59,7 +59,7 @@ function Register() {
                         />
                     </div>
                     <div>
-                        <label>Username:</label>
+                        <label>Kullanıcı Adı:</label>
                         <input
                             type="text"
                             value={username}
@@ -68,7 +68,7 @@ function Register() {
                         />
                     </div>
                     <div>
-                        <label>Password:</label>
+                        <label>Şifre:</label>
                         <input
                             type="password"
                             value={password}
@@ -76,7 +76,7 @@ function Register() {
                             required
                         />
                     </div>
-                    <button type="submit">Register</button>
+                    <button type="submit">Kayıt Ol</button>
                 </form>
             </div>
         </div>
