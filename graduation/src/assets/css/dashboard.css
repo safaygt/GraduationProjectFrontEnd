@@ -15,7 +15,6 @@
     width: 90%;
     border-radius: 10px;
     min-height: 70%;
-
 }
 
 
@@ -74,9 +73,7 @@
     background-color: transparent;
     display: flex;
     flex-direction: row;
-    /* Flex yönünü satır olarak ayarladım */
     flex-wrap: wrap;
-    /* Küçük ekranlarda sarması için */
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -239,6 +236,38 @@ img {
     line-height: 1.4;
 }
 
+.processed-image-container {
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.processed-image-container h3 {
+    margin-top: 0;
+    color: #185f0f;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.processed-image {
+    max-width: 30%;
+    max-height: 30%;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-note {
+    font-size: 0.85em;
+    color: #777;
+    margin-top: 10px;
+}
+
+
 @media (max-width: 768px) {
     .resim-yukleme-alani {
         flex-direction: column;
@@ -246,8 +275,17 @@ img {
 
     .resim-yukleme-alani button,
     .file-info-container,
-    .note-message {
+    .note-message,
+    .processed-image-container {
         width: 100%;
         max-width: unset;
+    }
+
+    .geri-donusum-item {
+        flex: 0 1 100%;
+    }
+
+    .processed-image {
+        max-width: 90%;
     }
 }
