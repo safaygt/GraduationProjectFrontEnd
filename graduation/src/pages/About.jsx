@@ -51,7 +51,6 @@ function About() {
         }
     };
 
-    // JSX burada olmalı
     return (
         <div className="about-container">
             <div className="contact-form">

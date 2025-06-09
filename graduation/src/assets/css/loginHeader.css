@@ -9,13 +9,20 @@
     position: sticky;
 
 
+    color: rgb(228, 221, 221);
+
+
+    top: 0;
+    z-index: 100;
+    box-sizing: border-box;
+
+
 }
 
 .login-header h1 {
     margin: 0;
     font-size: 1.5rem;
     margin-right: auto;
-    /* H1'i sola yaslar */
 }
 
 .login-header nav ul {

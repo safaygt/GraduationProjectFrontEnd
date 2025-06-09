@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AuthService from '../services/authService';
+import AuthApi from '../services/authServiceLogin'; // AuthServiceLogin yerine AuthApi kullanıldı
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/login.css';
 import { toast } from 'react-toastify';
@@ -12,7 +12,7 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await AuthService.login(username, password);
+            await AuthApi.login(username, password); // AuthApi.login olarak değiştirildi
             navigate('/main');
         } catch (err) {
             let errorMsg = "Giriş başarısız.";

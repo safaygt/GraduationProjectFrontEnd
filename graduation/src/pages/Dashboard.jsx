@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from '../utils/axiosInstance';
 import AuthService from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/dashboard.css';
@@ -16,10 +16,10 @@ function Dashboard() {
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0]; // Bu satır ikinci kod bloktan alındı
+        const file = event.target.files[0];
         setSelectedFile(file);
-        setResult(null); // Bu satır ikinci kod bloktan alındı
-        setProgress(0); // Bu satır ikinci kod bloktan alındı
+        setResult(null);
+        setProgress(0);
     };
 
     const handleButtonClick = () => {
@@ -37,12 +37,11 @@ function Dashboard() {
     };
 
     useEffect(() => {
-        // toast.dismiss() çağrısı güvenli hale getirildi
-        if (toast && typeof toast.dismiss === 'function') { // Güvenli kontrol eklendi
+        if (toast && typeof toast.dismiss === 'function') {
             toast.dismiss();
         }
 
-        const user = AuthService.getCurrentUser();
+        const user = AuthService.getUser();
         if (!user) {
             navigate('/login');
         }
@@ -60,34 +59,26 @@ function Dashboard() {
         setLoading(true);
         setProgress(0);
 
-
         const interval = setInterval(() => {
             setProgress((prevProgress) => {
                 if (prevProgress >= 100) {
                     clearInterval(interval);
-
                     return 100;
                 }
-                return prevProgress + 1; // Yükleme hızını ayarlayabilirsiniz
+                return prevProgress + 2;
             });
-        }, 60); // Her 60ms'de bir ilerleme
+        }, 60);
 
         try {
-            const user = AuthService.getCurrentUser();
-            const token = user ? user.token : null;
-
-            const response = await axios.post("http://localhost:8080/api/upload", formData, {
+            const response = await axiosInstance.post("/api/upload", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    "Authorization": `Bearer ${token}`
                 }
             });
 
-            // Yükleme başarılı olduğunda intervali durdur ve %100 yap
             clearInterval(interval);
             setProgress(100);
 
-            // Sonuçları göster ve toast mesajını ver
             setTimeout(() => {
                 setLoading(false);
                 setResult(response.data);
@@ -95,11 +86,11 @@ function Dashboard() {
             }, 300);
 
         } catch (error) {
-            console.error("Yükleme veya tahmin hatası:", error); // Hata detaylarını görmek için
+            console.error("Yükleme veya tahmin hatası:", error);
             toast.error("Tahmin yapılamadı. Lütfen tekrar deneyin.");
-            clearInterval(interval); // Hata durumunda intervali durdur
+            clearInterval(interval);
             setLoading(false);
-            setProgress(0); // Hata durumunda ilerlemeyi sıfırla
+            setProgress(0);
         }
     };
 
@@ -213,7 +204,7 @@ function Dashboard() {
 
                 {result && result.processed_image_url && (
                     <div className="processed-image-container">
-                        <h3>İşlenen resimdeki tespitler.</h3>
+                        <h3>İşlenen Resimdeki Tespitler</h3>
                         <img src={result.processed_image_url} alt="Tespit Edilen Resim" className="processed-image" />
                     </div>
                 )}

@@ -1,10 +1,11 @@
 import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
-const API_URL = 'http://localhost:8080/auth/'; // Backend URL'nizi kontrol edin
+const API_URL = '/auth/'; // Backend URL'nizi kontrol edin
 
 const register = async (name, lastName, username, password) => {
     try {
-        const response = await axios.post(API_URL + 'register', {
+        const response = await axiosInstance.post(API_URL + 'register', {
             name,
             lastName,
             username,

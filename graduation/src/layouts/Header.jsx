@@ -4,7 +4,7 @@ import AuthService from '../services/authService';
 import '../assets/css/header.css';
 
 function Header() {
-    const user = AuthService.getCurrentUser();
+    const user = AuthService.getUser();
     const navigate = useNavigate();
 
     const handleLogout = () => {
