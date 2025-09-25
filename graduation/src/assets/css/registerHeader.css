@@ -9,6 +9,14 @@
     width: 100%;
     position: sticky;
 
+
+    color: rgb(228, 221, 221);
+
+
+    top: 0;
+    z-index: 100;
+    box-sizing: border-box;
+
 }
 
 .register-header h1 {

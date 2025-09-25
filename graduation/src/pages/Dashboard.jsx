@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from '../utils/axiosInstance';
 import AuthService from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/dashboard.css';
@@ -16,7 +16,10 @@ function Dashboard() {
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        setResult(null);
+        setProgress(0);
     };
 
     const handleButtonClick = () => {
@@ -34,9 +37,11 @@ function Dashboard() {
     };
 
     useEffect(() => {
-        toast.dismiss();
+        if (toast && typeof toast.dismiss === 'function') {
+            toast.dismiss();
+        }
 
-        const user = AuthService.getCurrentUser();
+        const user = AuthService.getUser();
         if (!user) {
             navigate('/login');
         }
@@ -54,38 +59,38 @@ function Dashboard() {
         setLoading(true);
         setProgress(0);
 
-        try {
-            const user = AuthService.getCurrentUser();
-            const token = user ? user.token : null;
+        const interval = setInterval(() => {
+            setProgress((prevProgress) => {
+                if (prevProgress >= 100) {
+                    clearInterval(interval);
+                    return 100;
+                }
+                return prevProgress + 2;
+            });
+        }, 60);
 
-            const response = await axios.post("http://localhost:8080/api/upload", formData, {
+        try {
+            const response = await axiosInstance.post("/api/upload", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    "Authorization": `Bearer ${token}`
                 }
             });
 
-            // Simulate progress if actual upload progress is not available from backend
-            // If backend provides progress, you can remove this interval
-            const interval = setInterval(() => {
-                setProgress((prevProgress) => {
-                    if (prevProgress >= 100) {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            setLoading(false);
-                            setResult(response.data);
-                            toast.success("Tahmin başarıyla tamamlandı!"); // Başarı mesajı eklendi
-                        }, 300); // Progress barın bitmesi ve sonuçların gelmesi arasındaki gecikme
-                        return 100;
-                    }
-                    return prevProgress + 2; // Yükleme hızını ayarlayabilirsiniz
-                });
-            }, 60); // Her 60ms'de bir ilerleme
+            clearInterval(interval);
+            setProgress(100);
+
+            setTimeout(() => {
+                setLoading(false);
+                setResult(response.data);
+                toast.success("Tahmin başarıyla tamamlandı!");
+            }, 300);
+
         } catch (error) {
-            console.error("Yükleme veya tahmin hatası:", error); // Hata detaylarını görmek için
+            console.error("Yükleme veya tahmin hatası:", error);
             toast.error("Tahmin yapılamadı. Lütfen tekrar deneyin.");
+            clearInterval(interval);
             setLoading(false);
-            setProgress(0); // Hata durumunda ilerlemeyi sıfırla
+            setProgress(0);
         }
     };
 
@@ -157,20 +162,20 @@ function Dashboard() {
                     />
                     <button onClick={handleUpload}>Hesapla</button>
                     {selectedFile && (
-                        <div className="file-info-container">
-                            <p className="file-name">{selectedFile.name}</p>
-                            <button className="remove-file-button" id="deleteButton" onClick={handleRemoveFile}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                                </svg>
-                            </button>
-                        </div>
-
+                        <>
+                            <div className="file-info-container">
+                                <p className="file-name">{selectedFile.name}</p>
+                                <button className="remove-file-button" id="deleteButton" onClick={handleRemoveFile}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div className="note-message">
+                                <p>Not: Daha doğru sonuçlar için, sade arka planda sabit bir şekilde çekiniz.</p>
+                            </div>
+                        </>
                     )}
-                    {/* Yeni uyarı mesajı burada */}
-                    <div className="note-message">
-                        <p>Not: Daha doğru sonuçlar için, sade arka planda sabit bir şekilde çekiniz.</p>
-                    </div>
                 </div>
 
                 {loading && (
@@ -194,6 +199,13 @@ function Dashboard() {
                         ) : (
                             <p>Herhangi bir geri dönüştürülebilir malzeme bulunamadı.</p>
                         )}
+                    </div>
+                )}
+
+                {result && result.processed_image_url && (
+                    <div className="processed-image-container">
+                        <h3>İşlenen Resimdeki Tespitler</h3>
+                        <img src={result.processed_image_url} alt="Tespit Edilen Resim" className="processed-image" />
                     </div>
                 )}
             </div>

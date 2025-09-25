@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import AuthService from '../services/authService';
 import '../assets/css/MyWastes.css';
+import axiosInstance from '../utils/axiosInstance';
+import { toast } from 'react-toastify';
 
 function MyWastes() {
     const [recycles, setRecycles] = useState([]);
     const [products, setProducts] = useState({});
     const [loading, setLoading] = useState(true);
+    const [productsLoading, setProductsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
 
     useEffect(() => {
-        const user = AuthService.getCurrentUser();
+        const user = AuthService.getUser();
         if (!user) {
             toast.error('Kullanıcı oturum açmamış.');
             setLoading(false);
@@ -20,9 +22,10 @@ function MyWastes() {
 
         const fetchRecycles = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/recycles/user/${user.id}`, {
+                const response = await axiosInstance.get(`api/recycles/user/${user.id}`, {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
+                response.data.sort((a, b) => a.id - b.id);
                 setRecycles(response.data);
                 setLoading(false);
             } catch (err) {
@@ -36,19 +39,25 @@ function MyWastes() {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setProductsLoading(true);
             const productsData = {};
-            for (const recycle of recycles) {
+            const user = AuthService.getUser();
+
+            const fetchAll = recycles.map(async (recycle) => {
                 try {
-                    const user = AuthService.getCurrentUser();
-                    const response = await axios.get(`http://localhost:8080/api/recycles/recycle/${recycle.id}/products`, {
+                    const res = await axiosInstance.get(`api/recycles/recycle/${recycle.id}/products`, {
                         headers: { Authorization: `Bearer ${user.token}` }
                     });
-                    productsData[recycle.id] = response.data;
+                    productsData[recycle.id] = res.data;
                 } catch (err) {
                     console.error(`Ürünler alınamadı: ${recycle.id}`, err);
+                    productsData[recycle.id] = []; 
                 }
-            }
+            });
+
+            await Promise.all(fetchAll);
             setProducts(productsData);
+            setProductsLoading(false); 
         };
 
         if (recycles.length > 0) {
@@ -56,17 +65,32 @@ function MyWastes() {
         }
     }, [recycles]);
 
-    if (loading) return <div>Yükleniyor...</div>;
+    if (loading || productsLoading) {
+        return (
+            <div className="my-wastes-container">
+                <table className="wastes-table">
+                    <thead>
+                        <tr>
+                            <th>Geri Dönüşüm No</th>
+                            <th>Geri Dönüştürülen Ürünler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td colSpan="2" className="no-recycle-found">Geri dönüşüm bulunamadı.</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 
     const totalPages = Math.ceil(recycles.length / pageSize);
-    const paginatedRecycles = recycles.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    );
+    const paginatedRecycles = recycles.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
+    const handlePageChange = (newPage) => setCurrentPage(newPage);
 
     const renderPagination = () => {
         const pages = [];
@@ -95,14 +119,17 @@ function MyWastes() {
                 </thead>
                 <tbody>
                     {recycles.length > 0 ? (
-                        paginatedRecycles.map(recycle => (
+                        paginatedRecycles.map((recycle, index) => (
                             <tr key={recycle.id}>
-                                <td>{recycle.id}</td>
+                                <td>{(currentPage - 1) * pageSize + index + 1}</td>
                                 <td>
-                                    {products[recycle.id] && products[recycle.id].map(product => (
-                                        <p key={product.id}>- {product.fkproductType.productName} ({product.count} adet)</p>
-                                    ))}
-                                    {!products[recycle.id] && <p>Ürün bulunamadı.</p>}
+                                    {products[recycle.id] && products[recycle.id].length > 0 ? (
+                                        products[recycle.id].map(product => (
+                                            <p key={product.id}>- {product.fkproductType.productName} ({product.count} adet)</p>
+                                        ))
+                                    ) : (
+                                        <p>Ürün tespit edilemedi.</p>
+                                    )}
                                 </td>
                             </tr>
                         ))
