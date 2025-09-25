@@ -30,7 +30,7 @@ const login = async (username, password) => {
         }
         return response.data;
     } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || "Giriş işlemi sırasında bir hata oluştu.";
+        const errorMessage = error.response?.data || error.message || "Giriş işlemi sırasında bir hata oluştu";
         throw new Error(errorMessage);
     }
 };

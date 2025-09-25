@@ -39,7 +39,7 @@ function MyWastes() {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            setProductsLoading(true); // başta true yap
+            setProductsLoading(true);
             const productsData = {};
             const user = AuthService.getUser();
 
@@ -51,13 +51,13 @@ function MyWastes() {
                     productsData[recycle.id] = res.data;
                 } catch (err) {
                     console.error(`Ürünler alınamadı: ${recycle.id}`, err);
-                    productsData[recycle.id] = []; // hata olsa bile boş dizi olarak ata
+                    productsData[recycle.id] = []; 
                 }
             });
 
             await Promise.all(fetchAll);
             setProducts(productsData);
-            setProductsLoading(false); // tamamlanınca false yap
+            setProductsLoading(false); 
         };
 
         if (recycles.length > 0) {

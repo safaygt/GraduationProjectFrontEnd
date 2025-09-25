@@ -1,10 +1,9 @@
-// src/App.jsx
-import React, { useEffect } from 'react'; // useEffect'i import edin
+import React, { useEffect } from 'react'; 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute'; // ProtectedRoute'u import edin
+import ProtectedRoute from './components/ProtectedRoute'; 
 import Login from './pages/Login';
 import Register from './pages/Register';
-import AuthService from './services/authService'; // AuthService'i doğru şekilde import ettiğinizden emin olun
+import AuthService from './services/authService';
 import Dashboard from './pages/Dashboard';
 import Header from './layouts/Header';
 import LoginHeader from './layouts/LoginHeader';
