@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import '../assets/css/dashboard.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import recycleItems from "../constants/recycleItems";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Dashboard() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -101,55 +104,59 @@ function Dashboard() {
         }));
     };
 
-    const recycleItems = [
-        {
-            id: 'kagit',
-            title: 'Kağıt',
-            image: '../src/assets/kagit.jpg',
-            description: 'Kağıt, geri dönüştürülebilir atıkların en önemlilerinden biridir. Geri dönüştürülmüş kağıt, yeni kağıt ürünlerinin üretiminde kullanılır ve ormanların korunmasına yardımcı olur. Geri dönüştürülmüş kağıt kullanmak, enerji tasarrufu sağlar ve hava kirliliğini azaltır. Kağıt geri dönüşümü, atık depolama alanlarının dolmasını önler ve doğal kaynakların korunmasına katkıda bulunur. Geri dönüştürülmüş kağıt, gazete, dergi, karton kutu ve ambalaj malzemeleri gibi çeşitli ürünlerin üretiminde kullanılır. Kağıt geri dönüşümü, sürdürülebilir bir çevre için önemlidir.',
-        },
-        {
-            id: 'metal',
-            title: 'Metal',
-            image: '../src/assets/metal.jpg',
-            description: 'Metal, geri dönüştürülebilir atıkların önemli bir türüdür. Alüminyum ve çelik gibi metaller, geri dönüştürülerek yeni ürünlerin üretiminde kullanılır. Metal geri dönüşümü, enerji tasarrufu sağlar ve doğal kaynakların korunmasına yardımcı olur. Geri dönüştürülmüş metal, otomotiv, inşaat, ambalaj ve elektronik gibi çeşitli sektörlerde kullanılır. Metal geri dönüşümü, atık depolama alanlarının dolmasını önler ve çevre kirliliğini azaltır. Metal geri dönüşümü, sürdürülebilir bir gelecek için önemlidir.',
-        },
-        {
-            id: 'cam',
-            title: 'Cam',
-            image: '../src/assets/cam.jpg',
-            description: 'Cam, sonsuz kez geri dönüştürülebilen nadir malzemelerden biridir. Geri dönüştürülmüş cam, yeni cam ürünlerinin üretiminde kullanılır ve enerji tasarrufu sağlar. Cam geri dönüşümü, doğal kaynakların korunmasına yardımcı olur ve çevre kirliliğini azaltır. Geri dönüştürülmüş cam, şişe, kavanoz, cam ambalaj ve cam elyafı gibi çeşitli ürünlerin üretiminde kullanılır. Cam geri dönüşümü, atık depolama alanlarının dolmasını önler ve sürdürülebilir bir çevre için önemlidir.',
-        },
-        {
-            id: 'plastik',
-            title: 'Plastik',
-            image: '../src/assets/plastik.png',
-            description: 'Plastik atıklar, doğada uzun yıllar çözünmeden kalabilir ve çevre kirliliğine neden olur. Plastik geri dönüşümü, enerji tasarrufu sağlar ve doğal kaynakların korunmasına yardımcı olur. Geri dönüştürülmüş plastik, ambalaj, tekstil, otomotiv ve inşaat gibi çeşitli sektörlerde kullanılır. Plastik geri dönüşümü, atık depolama alanlarının dolmasını önler ve çevre kirliliğini azaltır. Plastik geri dönüşümü, sürdürülebilir bir gelecek için önemlidir.',
-        },
-    ];
-
     return (
         <div className="dashboard-container">
-            <div className="geri-donusum-bilgileri-container">
-                <div className="geri-donusum-bilgileri">
-                    {recycleItems.map(item => (
-                        <div className="geri-donusum-item" key={item.id}>
-                            <img src={item.image} alt={item.title} className="geri-donusum-resim" />
-                            <h3>{item.title}</h3>
+            <section className="carousel-section w-100">
+            <div id="recycleCarousel" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner">
+                {recycleItems.map((item, index) => (
+                    <div key={item.id} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                    <div
+                        className="carousel-item-bg d-flex flex-column justify-content-end text-center"
+                        style={{ backgroundImage: `url(${item.image})` }}
+                    >
+                        <div className="carousel-caption-custom">
+                            <h5>{item.title}</h5>
                             <p>
-                                {expanded[item.id] ? item.description : `${item.description.substring(0, 100)}...`}
+                                {expanded[item.id]
+                                    ? item.description
+                                    : `${item.description.substring(0, 150)}...`}
                             </p>
-                            {item.description.length > 100 && (
-                                <div className="expand-button-container">
-                                    <button className="expand-button" onClick={() => toggleExpand(item.id)}>
-                                        {expanded[item.id] ? '▲ Daha Az Göster' : '▼ Daha Fazla Göster'}
-                                    </button>
-                                </div>
+                            {item.description.length > 150 && (
+                                <button
+                                    className="btn btn-link p-0 text-white"
+                                    onClick={() => toggleExpand(item.id)}
+                                >
+                                    {expanded[item.id] ? "▲ Daha Az Göster" : "▼ Daha Fazla Göster"}
+                                </button>
                             )}
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </div>
+            ))}
+        </div>
+
+        <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#recycleCarousel"
+            data-bs-slide="prev"
+        >
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Önceki</span>
+        </button>
+        <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#recycleCarousel"
+            data-bs-slide="next"
+        >
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Sonraki</span>
+        </button>
+    </div>
+</section>
+
             <div className="resim-yukleme-alani-container">
                 <div className="resim-yukleme-alani">
                     <button onClick={handleButtonClick}>Dosya Seç</button>
@@ -171,9 +178,7 @@ function Dashboard() {
                                     </svg>
                                 </button>
                             </div>
-                            <div className="note-message">
-                                <p>Not: Daha doğru sonuçlar için, sade arka planda sabit bir şekilde çekiniz.</p>
-                            </div>
+                            
                         </>
                     )}
                 </div>
@@ -195,6 +200,9 @@ function Dashboard() {
                                 {result.total_effect && (
                                     <p>Bu geri dönüşümle dünyaya %{result.total_effect.toFixed(4)} katkı verdiniz.</p>
                                 )}
+                                <div className="note-message">
+                                    <p>Not: Daha doğru sonuçlar için, sade arka planda sabit bir şekilde çekiniz.</p>
+                                </div>
                             </div>
                         ) : (
                             <p>Herhangi bir geri dönüştürülebilir malzeme bulunamadı.</p>

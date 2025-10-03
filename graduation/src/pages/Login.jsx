@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import AuthApi from '../services/authServiceLogin';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import '../assets/css/login.css';
 import { toast } from 'react-toastify';
+
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -26,30 +27,48 @@ function Login() {
     };
 
     return (
-        <div className="login-container">
-            <div className="login-form">
-                <h2>Giriş Yap</h2>
-                <form onSubmit={handleLogin}>
-                    <div>
-                        <label>Kullanıcı Adı:</label>
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
+      
+            <div className="full-page-wrapper">
+                <div className="image-panel">
+                </div>
+
+             
+                <div className="login-container">
+                    <div className="login-form">
+                        <h2>Geri Dönüşüm Takip Sistemi</h2>
+                        <form onSubmit={handleLogin}>
+                            <div>
+                                <label>Kullanıcı Adı:</label>
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    placeholder="Kullanıcı Adınızı Giriniz"
+                                />
+                            </div>
+                            <div>
+                                <label>Şifre:</label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Şifrenizi Giriniz"
+                                />
+                            </div>
+                         
+                            <button type="submit">Giriş Yap</button>
+                        </form>
+
+                        <div className="register-link-container">
+                             <p className="text-sm text-gray-600">
+                                Henüz üye değil misiniz? 
+                                <Link to="/register" className="register-link">Kayıt Olun</Link>
+                             </p>
+                        </div>
                     </div>
-                    <div>
-                        <label>Şifre:</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <button type="submit">Giriş Yap</button>
-                </form>
+                </div>
             </div>
-        </div>
+       
     );
 }
 

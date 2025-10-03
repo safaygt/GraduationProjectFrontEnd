@@ -1,6 +1,5 @@
-/* Header.css */
 header {
-    background-color: #185f0f;
+    background-color: #515351;
     color: rgb(228, 221, 221);
 
     width: 100%;
@@ -22,7 +21,6 @@ header nav ul {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    /* Tüm elemanları sağa hizala */
     padding: 0;
     margin: 0;
     width: 100%;
@@ -46,5 +44,5 @@ header nav ul li button {
 
 header nav ul li a:hover,
 header nav ul li button:hover {
-    color: #c2c1d4;
+    color: #b6c4b6;
 }

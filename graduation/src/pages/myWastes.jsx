@@ -5,10 +5,8 @@ import axiosInstance from '../utils/axiosInstance';
 import { toast } from 'react-toastify';
 
 function MyWastes() {
-    const [recycles, setRecycles] = useState([]);
-    const [products, setProducts] = useState({});
+    const [recycles, setRecycles] = useState([]); 
     const [loading, setLoading] = useState(true);
-    const [productsLoading, setProductsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 6;
 
@@ -25,6 +23,7 @@ function MyWastes() {
                 const response = await axiosInstance.get(`api/recycles/user/${user.id}`, {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
+                
                 response.data.sort((a, b) => a.id - b.id);
                 setRecycles(response.data);
                 setLoading(false);
@@ -35,54 +34,13 @@ function MyWastes() {
         };
 
         fetchRecycles();
-    }, []);
+    }, []); 
+    
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setProductsLoading(true);
-            const productsData = {};
-            const user = AuthService.getUser();
-
-            const fetchAll = recycles.map(async (recycle) => {
-                try {
-                    const res = await axiosInstance.get(`api/recycles/recycle/${recycle.id}/products`, {
-                        headers: { Authorization: `Bearer ${user.token}` }
-                    });
-                    productsData[recycle.id] = res.data;
-                } catch (err) {
-                    console.error(`Ürünler alınamadı: ${recycle.id}`, err);
-                    productsData[recycle.id] = []; 
-                }
-            });
-
-            await Promise.all(fetchAll);
-            setProducts(productsData);
-            setProductsLoading(false); 
-        };
-
-        if (recycles.length > 0) {
-            fetchProducts();
-        }
-    }, [recycles]);
-
-    if (loading || productsLoading) {
+    if (loading) {
         return (
             <div className="my-wastes-container">
-                <table className="wastes-table">
-                    <thead>
-                        <tr>
-                            <th>Geri Dönüşüm No</th>
-                            <th>Geri Dönüştürülen Ürünler</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                            <td colSpan="2" className="no-recycle-found">Geri dönüşüm bulunamadı.</td>
-                        </tr>
-
-                    </tbody>
-                </table>
+                <p className="loading-text">Veriler yükleniyor...</p>
             </div>
         );
     }
@@ -115,6 +73,7 @@ function MyWastes() {
                     <tr>
                         <th>Geri Dönüşüm No</th>
                         <th>Geri Dönüştürülen Ürünler</th>
+                        <th>Toplam Katkı Oranı (Etki Birimi)</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -123,19 +82,22 @@ function MyWastes() {
                             <tr key={recycle.id}>
                                 <td>{(currentPage - 1) * pageSize + index + 1}</td>
                                 <td>
-                                    {products[recycle.id] && products[recycle.id].length > 0 ? (
-                                        products[recycle.id].map(product => (
-                                            <p key={product.id}>- {product.fkproductType.productName} ({product.count} adet)</p>
+                                    {recycle.products && recycle.products.length > 0 ? (
+                                        recycle.products.map((product, productIndex) => (
+                                            <p key={productIndex}>- {product.productName} ({product.count} adet)</p>
                                         ))
                                     ) : (
                                         <p>Ürün tespit edilemedi.</p>
                                     )}
                                 </td>
+                                <td>
+                                    {recycle.totalContribution ? recycle.totalContribution.toFixed(4) : '0.00'}
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="2" className="no-recycle-found">Geri dönüşüm bulunamadı.</td>
+                            <td colSpan="3" className="no-recycle-found">Geri dönüşüm bulunamadı.</td> 
                         </tr>
                     )}
                 </tbody>
