@@ -3,10 +3,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 86vh;
-    background-color: rgba(95, 180, 92, 0.5);
-    background-blend-mode: multiply;
-    background-image: url('../background.jpg');
+    min-height: 88vh;
+    background: linear-gradient(135deg,#C7D4BF 0%, #8FA98F 50%, #607360 100%);
     padding-bottom: 60px;
 }
 
@@ -29,7 +27,8 @@
 }
 
 .wastes-table th {
-    background-color: #b0d9ad;
+    background-color: #607360;
+    color: white;
 }
 
 .error-message {
@@ -54,9 +53,9 @@
 }
 
 .pagination-button.active {
-    background-color: #4CAF50;
+    background-color: #607360;
     color: white;
-    border: 1px solid #4CAF50;
+    border: 1px solid #607360;
 }
 
 .no-recycle-found {

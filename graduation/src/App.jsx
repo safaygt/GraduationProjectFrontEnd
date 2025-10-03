@@ -6,8 +6,6 @@ import Register from './pages/Register';
 import AuthService from './services/authService';
 import Dashboard from './pages/Dashboard';
 import Header from './layouts/Header';
-import LoginHeader from './layouts/LoginHeader';
-import RegisterHeader from './layouts/RegisterHeader';
 import About from './pages/About';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,13 +35,12 @@ function App() {
         <Routes>
           <Route path="/login" element={
             <>
-              <LoginHeader />
               <Login />
             </>
           } />
           <Route path="/register" element={
             <>
-              <RegisterHeader />
+         
               <Register />
             </>
           } />

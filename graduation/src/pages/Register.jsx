@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import registerService from '../services/registerService';
 import '../assets/css/register.css';
 import { toast } from 'react-toastify';
@@ -63,42 +63,81 @@ function Register() {
         }
       };
 
-    return (
-        <div className="register-container">
-            <div className="register-form">
-                <h2>Kayıt Ol</h2>
-                <form onSubmit={handleRegister}>
-                    <div>
-                        <label>İsim:</label>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+      return (
+        <>
+            <div className="register-wrapper">
+                
+                <div className="register-container-left">
+                    <div className="register-form">
+                        <h2>Geri Dönüşüm Takip Sistemi - Kayıt</h2>
+                        <form onSubmit={handleRegister}>
+                            <div>
+                                <label>İsim:</label>
+                                <input 
+                                    type="text" 
+                                    value={name} 
+                                    onChange={(e) => setName(e.target.value)} 
+                                    placeholder="Adınızı Giriniz"
+                                    required 
+                                />
+                            </div>
+                            <div>
+                                <label>Soyisim:</label>
+                                <input 
+                                    type="text" 
+                                    value={lastName} 
+                                    onChange={(e) => setLastName(e.target.value)} 
+                                    placeholder="Soyadınızı Giriniz"
+                                    required 
+                                />
+                            </div>
+                            <div>
+                                <label>Kullanıcı Adı:</label>
+                                <input 
+                                    type="text" 
+                                    value={username} 
+                                    onChange={(e) => setUsername(e.target.value)} 
+                                    placeholder="Kullanıcı Adınızı Belirleyiniz"
+                                    required 
+                                />
+                            </div>
+                            <div>
+                                <label>Şifre (En az 8 karakter, 1 Büyük Harf, 1 Rakam):</label>
+                                <input 
+                                    type="password" 
+                                    value={password} 
+                                    onChange={(e) => setPassword(e.target.value)} 
+                                    placeholder="Şifrenizi Belirleyiniz"
+                                    required 
+                                />
+                            </div>
+                            
+                            <div className="consent-checkbox-container">
+                                <input
+                                    type="checkbox"
+                                    checked={isConsentChecked}
+                                    onChange={(e) => setIsConsentChecked(e.target.checked)}
+                                    id="consent-checkbox"
+                                />
+                                <label htmlFor="consent-checkbox">
+                                    <a href="#" onClick={handleOpenModal}>Açık rıza metnini</a> okudum ve onaylıyorum.
+                                </label>
+                            </div>
+                            
+                            <button type="submit">Kayıt Ol</button>
+                        </form>
+
+                        <div className="login-link-container">
+                             <p className="text-sm text-gray-600">
+                                Zaten üye misiniz? 
+                                <Link to="/login" className="login-link"> Giriş Yapın</Link>
+                             </p>
+                        </div>
                     </div>
-                    <div>
-                        <label>Soyisim:</label>
-                        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-                    </div>
-                    <div>
-                        <label>Kullanıcı Adı:</label>
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
-                    </div>
-                    <div>
-                        <label>Şifre:</label>
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                    </div>
-                    
-                    <div className="consent-checkbox-container">
-                        <input
-                            type="checkbox"
-                            checked={isConsentChecked}
-                            onChange={(e) => setIsConsentChecked(e.target.checked)}
-                            id="consent-checkbox"
-                        />
-                        <label htmlFor="consent-checkbox">
-                            <a href="#" onClick={handleOpenModal}>Açık rıza metnini</a> okudum ve onaylıyorum.
-                        </label>
-                    </div>
-                    
-                    <button type="submit">Kayıt Ol</button>
-                </form>
+                </div>
+                
+                <div className="image-panel">
+                </div>
             </div>
             
             {showModal && (
@@ -109,7 +148,7 @@ function Register() {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
