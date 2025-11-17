@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosInstance from '../utils/axiosInstance';
 
-const API_URL = '/auth/'; // Backend URL'nizi kontrol edin
+const API_URL = '/auth/'; 
 
 const register = async (name, lastName, username, password) => {
     try {
@@ -11,9 +11,9 @@ const register = async (name, lastName, username, password) => {
             username,
             password,
         });
-        return response.data; // İsteğe bağlı olarak yanıtı döndürebilirsiniz
+        return response.data; 
     } catch (error) {
-        throw error.response.data; // Hata durumunda hatayı döndür
+        throw error.response.data; 
     }
 };
 

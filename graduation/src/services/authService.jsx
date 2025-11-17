@@ -4,23 +4,21 @@ let logoutTimer = null;
 const authEventEmitter = new EventTarget();
 
 
-// Token'ı localStorage'dan alır.
 const getToken = () => localStorage.getItem('token');
 
-// Token'ı localStorage'a kaydeder ve otomatik çıkış zamanlayıcısını ayarlar.
 
 const setToken = (token) => {
     localStorage.setItem('token', token);
     _clearAutoLogout();
     _scheduleAutoLogout();
-    authEventEmitter.dispatchEvent(new Event('authChange')); // Giriş yapıldığında olay tetikle
+    authEventEmitter.dispatchEvent(new Event('authChange')); 
 };
 
 const removeToken = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     _clearAutoLogout();
-    authEventEmitter.dispatchEvent(new Event('authChange')); // Çıkış yapıldığında olay tetikle
+    authEventEmitter.dispatchEvent(new Event('authChange')); 
 };
 
 const logout = () => {
@@ -31,15 +29,14 @@ const isTokenExpired = () => {
     const token = getToken();
     if (!token) return true;
     try {
-        const { exp } = jwtDecode(token); // jwt-decode kullanarak exp değerini al
-        // Token'ın süresi dolmak üzereyse veya dolmuşsa true döndür
+        const { exp } = jwtDecode(token); 
+        
         return exp * 1000 < Date.now();
     } catch {
-        return true; // Hata durumunda token'ı geçersiz say
+        return true; 
     }
 };
 
-// Otomatik çıkış zamanlayıcısını temizler.
 function _clearAutoLogout() {
     if (logoutTimer) {
         clearTimeout(logoutTimer);
@@ -47,27 +44,26 @@ function _clearAutoLogout() {
     }
 }
 
-// Token süresinin dolmasına kalan süreye göre otomatik çıkış zamanlayıcısı kurar.
 function _scheduleAutoLogout() {
     const token = getToken();
     if (!token) return;
 
     let exp;
     try {
-        ({ exp } = jwtDecode(token)); // jwt-decode kullanarak exp değerini al
+        ({ exp } = jwtDecode(token));
     } catch {
-        return logout(); // Token parse hatası varsa hemen logout yap
+        return logout(); 
     }
 
-    const expireAt = exp * 1000; // Token bitiş zamanı (milisaniye cinsinden)
-    const delay = expireAt - Date.now(); // Token bitişine kalan süre
+    const expireAt = exp * 1000; 
+    const delay = expireAt - Date.now(); 
 
     if (delay <= 0) {
-        // Zaten süresi dolmuşsa anında logout yap
+        
         logout();
     } else {
         logoutTimer = setTimeout(() => {
-            logout(); // Süre dolduğunda logout yap
+            logout(); 
         }, delay);
     }
 }
