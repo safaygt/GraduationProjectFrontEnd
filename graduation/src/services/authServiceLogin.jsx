@@ -15,7 +15,7 @@ const login = async (username, password) => {
             const decodedToken = jwtDecode(token);
 
             const userId = decodedToken.userId;
-            console.log("Sub değeri: ", decodedToken.sub);
+            
             const userUsername = decodedToken.sub;
 
             const user = {

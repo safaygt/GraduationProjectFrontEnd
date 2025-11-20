@@ -4,6 +4,9 @@ import '../assets/css/MyWastes.css';
 import axiosInstance from '../utils/axiosInstance';
 import { toast } from 'react-toastify';
 
+
+const API_URL = '/api/';
+
 function MyWastes() {
     const [recycles, setRecycles] = useState([]); 
     const [loading, setLoading] = useState(true);
@@ -20,7 +23,7 @@ function MyWastes() {
 
         const fetchRecycles = async () => {
             try {
-                const response = await axiosInstance.get(`api/recycles/user/${user.id}`, {
+                const response = await axiosInstance.get(`${API_URL}recycles/user/${user.id}`, {
                     headers: { Authorization: `Bearer ${user.token}` }
                 });
                 
