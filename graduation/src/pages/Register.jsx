@@ -34,7 +34,7 @@ function Register() {
         }
 
         try {
-            const response = await registerService.register(name, lastName, username, password);
+            const response = await registerService.register(name, lastName, username, password,isConsentChecked);
             toast.success("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.");
             navigate('/login');
         } catch (err) {

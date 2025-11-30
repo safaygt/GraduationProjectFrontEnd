@@ -76,6 +76,8 @@ function Dashboard() {
             const response = await axiosInstance.post("/api/upload", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${AuthService.getToken()}`
+                    
                 }
             });
 
