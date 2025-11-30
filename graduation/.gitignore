@@ -23,7 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-# Project-specific
-Dockerfile
-nginx.conf
-.env
