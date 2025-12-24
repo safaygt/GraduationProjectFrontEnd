@@ -79,12 +79,18 @@ docker-compose up --build -d
 
 
 Related Repositories
+
 <ul> 
   <li>Backend (Spring Boot)</li>
-  <p>[Graduation Project Backend → GitHub](https://github.com/safaygt/graduation-project.git)</p>
+  <p><a href="https://github.com/safaygt/graduation-project.git">
+      Graduation Project Backend → GitHub
+    </a></p>
   
-  <li>AI Model API (Flask + YOLO)</li>
-  <p>[Graduation Project Model Deployment → GitHub](https://github.com/safaygt/GraduationProjectDeployModel.git)</p>
+  <li>AI Model API (FLASK + YOLO)</li>
+  <p><a href="https://github.com/safaygt/GraduationProjectDeployModel.git">
+      Graduation Project Model
+    </a></p> 
+    
 </ul>
 
 Note: The backend service must be running before the frontend can function properly.
