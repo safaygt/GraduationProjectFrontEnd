@@ -88,7 +88,7 @@ Related Repositories
   
   <li>AI Model API (FLASK + YOLO)</li>
   <p><a href="https://github.com/safaygt/GraduationProjectDeployModel.git">
-      Graduation Project Model
+      Graduation Project Model → GitHub
     </a></p> 
     
 </ul>
